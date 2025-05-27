@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>정지경님 디지털 명함</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3498db; /* 세련된 파란색 계열 */
+            --text-color: #333;
+            --background-color: #f4f7f6;
+            --card-background: #ffffff;
+            --icon-color: #555;
+            --naver-green: #03C75A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: var(--background-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--text-color);
+            padding: 20px;
+            overflow: hidden; /* 스크롤 방지 */
+        }
+
+        .card-container {
+            width: 100%;
+            max-width: 400px; /* 모바일 화면에 적합한 최대 너비 */
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInSlideUp 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeInSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .business-card {
+            background-color: var(--card-background);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .business-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .profile-header {
+            margin-bottom: 25px;
+            opacity: 0;
+            animation: itemFadeInUp 0.6s 0.2s ease-out forwards;
+        }
+        
+        .profile-header h1 {
+            font-size: 2em; /* 1em = 16px, 32px */
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+
+        .profile-header .tagline {
+            font-size: 0.95em; /* 15.2px */
+            color: #555;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .contact-info, .social-links {
+            margin-top: 20px;
+        }
+
+        .contact-item, .social-item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; /* 아이콘과 텍스트 왼쪽 정렬 */
+            padding: 12px 15px;
+            margin-bottom: 12px;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            opacity: 0;
+            animation: itemFadeInUp 0.6s ease-out forwards;
+        }
+        
+        /* 애니메이션 지연 시간 설정 */
+        .contact-item:nth-child(1) { animation-delay: 0.4s; }
+        .contact-item:nth-child(2) { animation-delay: 0.5s; }
+        .social-links-title { animation-delay: 0.6s; }
+        .social-item:nth-child(2) { animation-delay: 0.7s; } /* Title 다음 첫번째 소셜 아이템 */
+        .social-item:nth-child(3) { animation-delay: 0.8s; } /* Title 다음 두번째 소셜 아이템 */
+
+
+        @keyframes itemFadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .contact-item:hover, .social-item:hover {
+            background-color: #e9e9e9;
+            transform: scale(1.03);
+        }
+
+        .contact-item i, .social-item .icon-wrapper {
+            font-size: 1.3em; /* 20.8px */
+            margin-right: 15px;
+            width: 25px; /* 아이콘 너비 고정 */
+            text-align: center;
+            color: var(--icon-color);
+            transition: color 0.3s ease;
+        }
+        
+        .contact-item:hover i, .social-item:hover .icon-wrapper {
+            color: var(--primary-color);
+        }
+        
+        .social-item .icon-wrapper svg {
+            width: 22px; /* SVG 아이콘 크기 조절 */
+            height: 22px;
+            vertical-align: middle;
+        }
+        .social-item:hover .icon-wrapper svg path {
+            fill: var(--naver-green); /* 호버 시 네이버 로고 색상 변경 */
+        }
+
+        .contact-item span, .social-item span {
+            font-size: 0.9em; /* 14.4px */
+            font-weight: 500;
+        }
+
+        .social-links-title {
+            font-size: 0.8em;
+            color: #777;
+            text-align: left;
+            margin-bottom: 10px;
+            padding-left: 5px;
+            font-weight: 500;
+            opacity: 0;
+            animation: itemFadeInUp 0.6s ease-out forwards;
+        }
+        
+        /* 네이버 아이콘 SVG 스타일 */
+        .icon-svg path {
+            transition: fill 0.3s ease;
+        }
+        .naver-blog-icon path { fill: var(--naver-green); }
+        .naver-store-icon path { fill: var(--naver-green); }
+
+        /* 화면 크기가 작을 때 폰트 크기 미세 조정 */
+        @media (max-width: 360px) {
+            .profile-header h1 { font-size: 1.8em; }
+            .profile-header .tagline { font-size: 0.9em; }
+            .contact-item span, .social-item span { font-size: 0.85em; }
+            .business-card { padding: 25px; }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="business-card">
+            <div class="profile-header">
+                <h1>정지경</h1>
+                <p class="tagline">보이지 않는 곳에서 흐름을 설계하는 사람,<br>우진글로벌 주식회사 경영지원팀 정지경 과장입니다.</p>
+            </div>
+
+            <div class="contact-info">
+                <a href="mailto:saradasara.j@gmail.com" class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>saradasara.j@gmail.com</span>
+                </a>
+                <a href="tel:010-6238-5066" class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span>010-6238-5066</span>
+                </a>
+            </div>
+
+            <div class="social-links">
+                <p class="social-links-title">SNS & Channels</p>
+                <a href="https://blog.naver.com/petaloo" target="_blank" class="social-item">
+                    <span class="icon-wrapper">
+                        <!-- Naver Blog Icon SVG -->
+                        <svg class="icon-svg naver-blog-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M16.312 15.365H7.688V8.635h5.453V4H6v16h12V11.817h-4.832v3.548h2.444z"/></svg>
+                    </span>
+                    <span>네이버 블로그</span>
+                </a>
+                <a href="https://smartstore.naver.com/ibstoreshop?NaPm=ct%3Dmb6ccfkz%7Cci%3Dcheckout%7Ctr%3Dds%7Ctrx%3Dnull%7Chk%3D7bcb66999890458c59e831d106aceb7b71419168" target="_blank" class="social-item">
+                    <span class="icon-wrapper">
+                        <!-- Naver Smart Store Icon SVG (Shopping Bag) -->
+                        <svg class="icon-svg naver-store-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 6h-3V4c0-1.1-.9-2-2-2h-2c-1.1 0-2 .9-2 2v2H6c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-7-2h2v2h-2V4zm7 15H6V8h3v2h6V8h3v11z"/></svg>
+                    </span>
+                    <span>네이버 스마트스토어</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript는 현재 CSS 애니메이션으로 충분히 동적이므로, 추가 스크립트는 필요하지 않습니다.
+        // 만약 더 복잡한 상호작용이 필요하다면 여기에 작성할 수 있습니다.
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("정지경님의 디지털 명함이 로드되었습니다.");
+        });
+    </script>
+</body>
+</html>
